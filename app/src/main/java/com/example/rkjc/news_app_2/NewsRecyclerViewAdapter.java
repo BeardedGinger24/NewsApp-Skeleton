@@ -1,28 +1,33 @@
 package com.example.rkjc.news_app_2;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.rkjc.news_app_2.data.NewsItem;
+import com.example.rkjc.news_app_2.data.NewsItemViewModel;
+
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder> {
 
-    //Context context;
-    private ArrayList<NewsItem> articles;
+    private List<NewsItem> articles; // Cached copy of words
     final private ListItemClickListener mOnClickListener;
 
+    private NewsItemViewModel viewModel;
 
-    public NewsRecyclerViewAdapter(ArrayList<NewsItem> articles, ListItemClickListener mOnClickListener){
+    public NewsRecyclerViewAdapter( NewsItemViewModel viewModel, ListItemClickListener mOnClickListener){
         //this.context = context;
-        this.articles = articles;
+        this.viewModel = viewModel;
+//        mInflater = LayoutInflater.from(context);
         this.mOnClickListener = mOnClickListener;
     }
 
@@ -44,17 +49,25 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
     }
 
     @Override
-    public void onBindViewHolder( NewsViewHolder articleViewHolder, int i) {
-        articleViewHolder.bind(i);
+    public void onBindViewHolder( NewsViewHolder articleViewHolder, final int i) {
+            articleViewHolder.bind(i);
+    }
+
+    void setNewsItems(List<NewsItem> newsItems){
+        articles = newsItems;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return articles.size();
+        if(articles != null){
+            return articles.size();
+        } else {
+            return 0;
+        }
     }
 
     class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
 
         TextView mArticleTitle;
         TextView mArticleDescription;
@@ -83,6 +96,5 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
             mOnClickListener.onListItemClick(clickedPosition);
         }
     }
-
 
 }
