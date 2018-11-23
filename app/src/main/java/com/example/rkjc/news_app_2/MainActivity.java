@@ -13,11 +13,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.rkjc.news_app_2.data.NewsItem;
 import com.example.rkjc.news_app_2.data.NewsItemRepository;
 import com.example.rkjc.news_app_2.data.NewsItemViewModel;
+import com.example.rkjc.news_app_2.sync.UpdateUtilities;
+import com.example.rkjc.news_app_2.utils.NotificationUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NewsRecyclerViewA
 
     NewsItemViewModel newsItemViewModel;
     NewsItemRepository newsItemRepository;
+//    Button mNotify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements NewsRecyclerViewA
         mNewsArticles.setLayoutManager(layoutManager);
 
         mNewsArticles.setHasFixedSize(true);
+
+        UpdateUtilities.scheduleUpdate(this);
     }
 
     @Override
@@ -67,11 +74,15 @@ public class MainActivity extends AppCompatActivity implements NewsRecyclerViewA
         int itemThatWasClickedId = item.getItemId();
         if (itemThatWasClickedId == R.id.action_search) {
             newsItemViewModel.update();
+//            testNotification();
             return true;
-
         }
         return super.onOptionsItemSelected(item);
     }
+
+//    public void update(){
+//        newsItemViewModel.update();
+//    }
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
@@ -82,4 +93,8 @@ public class MainActivity extends AppCompatActivity implements NewsRecyclerViewA
             startActivity(intent);
         }
     }
+
+//    public void testNotification(){
+//        NotificationUtils.notifyNews(this);
+//    }
 }

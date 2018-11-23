@@ -3,11 +3,10 @@ package com.example.rkjc.news_app_2.data;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.example.rkjc.news_app_2.JsonUtils;
-import com.example.rkjc.news_app_2.MainActivity;
-import com.example.rkjc.news_app_2.NetworkUtils;
+import com.example.rkjc.news_app_2.sync.UpdateTask;
+import com.example.rkjc.news_app_2.utils.JsonUtils;
+import com.example.rkjc.news_app_2.utils.NetworkUtils;
 import com.example.rkjc.news_app_2.NewsRecyclerViewAdapter;
 
 import java.io.IOException;
@@ -78,7 +77,6 @@ public class NewsItemRepository {
 
         @Override
         protected Void doInBackground(final List<NewsItem>... params) {
-//            Log.d("mycode", "deleteding word: " + params[0].get(0).getAuthor());
             mAsyncTaskDao.deleteAll();
             return null;
         }

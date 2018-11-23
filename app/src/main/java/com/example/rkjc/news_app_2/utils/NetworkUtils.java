@@ -1,7 +1,8 @@
-package com.example.rkjc.news_app_2;
+package com.example.rkjc.news_app_2.utils;
 
 import android.net.Uri;
-import android.util.Log;
+
+import com.example.rkjc.news_app_2.BuildConfig;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,9 +16,6 @@ public class NetworkUtils {
     final static String BASE_URL =
             "https://newsapi.org/v1/articles";
 
-    // the manifest grabs the string value for the api key, in the res
-
-    // final String temp = "https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey=3e2f5d51c37745858195217b93a3581a";
     final static String PARAM_SOURCE = "source";
     final static String SOURCE = "the-next-web";
 
@@ -41,7 +39,6 @@ public class NetworkUtils {
             e.printStackTrace();
         }
 
-        Log.d("IN_BUILD_URL", url.toString());
         return url;
     }
 
